@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Medical Delivery - AI Sehat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f9;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg,#00c853,#00e676);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Container */
+.delivery-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.delivery-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00c853;
+}
+
+/* Form */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+form input,
+form textarea,
+form select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+}
+
+form textarea {
+    grid-column: span 2;
+    resize: none;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+/* Button */
+button {
+    background: #00c853;
+    border: none;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #009624;
+}
+
+/* Info Section */
+.info-box {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+@media(max-width: 768px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+    form textarea,
+    .full-width {
+        grid-column: span 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+AI Sehat - Medical Delivery 🚚
+</header>
+
+<div class="delivery-container">
+
+<h2>Order Your Medicines Online</h2>
+
+ 
+<form>
+
+<input type="text" placeholder="Full Name" required>
+<input type="tel" placeholder="Phone Number" required>
+
+<input type="text" placeholder="City" required>
+<input type="text" placeholder="Area / Street Address" required>
+
+<select class="full-width" required>
+<option value="">Select Delivery Type</option>
+<option>Normal Delivery (24 Hours)</option>
+<option>Urgent Delivery (Same Day)</option>
+</select>
+
+<textarea rows="4" placeholder="Enter Medicine Names or Health Condition"></textarea>
+
+<input type="file" class="full-width">
+
+<button class="full-width" type="submit">Place Order</button>
+
+</form>
+
+</div>
+
+<footer>
+© AI Sehat Pakistan
+</footer>
+
+</body>
+</html>

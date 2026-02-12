@@ -1,0 +1,184 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global AI Medical Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background: #fdfdfd; min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: linear-gradient(135deg,#00d084,#00b894); text-align:center; padding:30px; color:white; }
+    .container { flex: 1; display:flex; justify-content:center; align-items:center; padding: 20px; }
+    .card { background:white; padding:30px; border-radius:20px; width:100%; max-width:750px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.1); border-bottom: 5px solid #00d084; }
+    input, select { width:100%; padding:14px; margin:10px 0; border-radius:12px; border:1.5px solid #eee; font-size: 15px; transition: 0.3s; }
+    input:focus { border-color: #00d084; outline: none; }
+    button { width:100%; padding:15px; background:#00d084; border:none; color:white; border-radius:12px; cursor:pointer; font-weight:600; font-size:16px; margin-top: 10px; }
+    button:hover { background:#019d65; }
+
+    #chatContainer { display: none; }
+    #chatBox { height: 500px; overflow-y: auto; background: #ffffff; padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #f0f0f0; display:flex; flex-direction:column; gap: 15px; }
+    .msg { padding: 15px 20px; border-radius: 18px; font-size: 14.5px; line-height: 1.6; max-width: 85%; }
+    .ai-msg { background: #f1f3f4; color: #202124; align-self: flex-start; border-bottom-left-radius: 2px; }
+    .user-msg { background: #00d084; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .chat-input-area { display: flex; gap: 10px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; background: #e8f5e9; color: #2e7d32; margin-bottom: 5px; }
+     
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🩺 Global AI Medical Network</h1>
+    <p>The world's most comprehensive AI Diagnostic Suite</p>
+</header>
+
+<div class="container">
+    <div class="card">
+        <div id="bookingForm">
+            <h2 style="margin-bottom:20px; color:#2d3436;">Patient Intake</h2>
+            <input type="text" id="name" placeholder="Enter Full Name">
+            <select id="doctor">
+                <option value="">Select a Specialized AI Field</option>
+                <option value="General Physician">General Physician (Fever, Flu, Pain)</option>
+                <option value="Cardiologist">Cardiologist (Heart & Blood Pressure)</option>
+                <option value="Dermatologist">Dermatologist (Skin & Allergies)</option>
+                <option value="Pediatrician">Pediatrician (Childhood Care)</option>
+                <option value="Psychiatrist">Psychiatrist (Mental Wellness)</option>
+                <option value="Orthopedic">Orthopedic (Bones & Injuries)</option>
+                <option value="Neurologist">Neurologist (Brain & Nerves)</option>
+                <option value="ENT Specialist">ENT (Ear, Nose, Throat)</option>
+            </select>
+            <button onclick="startConsultation()">Start AI Consultation</button>
+        </div>
+
+        <div id="chatContainer">
+            <div id="chatBox"></div>
+            <div class="chat-input-area">
+                <input type="text" id="userQuery" placeholder="Ask about symptoms, medications, or diseases...">
+                <button style="width: 120px;" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedDoctor = "";
+let userName = "";
+
+const medicalDB = {
+    "General Physician": {
+        "fever": "Rest and hydration. If >103°F, use Ibuprofen. Seek help if you have a stiff neck.",
+        "flu": "Viral infection. Stay home, drink fluids. If you have chest pain, it may be secondary pneumonia.",
+        "diabetes": "Type 1 or 2. Manage via insulin/metformin and low-carb diet. Check blood sugar daily.",
+        "anemia": "Low iron. Symptoms include pale skin and fatigue. Eat iron-rich foods (spinach, beans).",
+        "gastritis": "Stomach lining inflammation. Avoid spicy food and caffeine. Use antacids.",
+        "uti": "Urinary infection. Symptoms: burning sensation. Requires high water intake and antibiotics.",
+        "obesity": "Risk factor for heart disease. Focus on calorie deficit and 150 mins of weekly exercise."
+    },
+    "Cardiologist": {
+        "chest pain": "URGENT: Could be Myocardial Infarction (Heart Attack). If squeezing feeling, call 911.",
+        "arrhythmia": "Irregular heart rhythm. Avoid alcohol/caffeine. Requires an EKG for diagnosis.",
+        "hypertension": "High Blood Pressure. Target < 120/80. Reduce sodium intake immediately.",
+        "heart failure": "Symptoms: shortness of breath and leg swelling. See a doctor for diuretics.",
+        "stroke": "Check for F.A.S.T: Face drooping, Arm weakness, Speech difficulty, Time to call 911."
+    },
+    "Dermatologist": {
+        "acne": "Clogged pores. Use Salicylic acid. If cystic/painful, see a doctor for Isotretinoin.",
+        "hives": "Itchy red bumps (Allergic reaction). Take an antihistamine like Cetirizine.",
+        "rosacea": "Face redness. Avoid spicy foods and extreme sun. Use gentle cleansers.",
+        "shingles": "Painful rash following a nerve path. Requires antiviral medication (Acyclovir) ASAP.",
+        "hair loss": "Alopecia or Telogen Effluvium. Check for stress or Vitamin B12 deficiency."
+    },
+    "Neurologist": {
+        "migraine": "Severe pulsating headache. Use sumatriptan or rest in a dark, quiet room.",
+        "seizure": "Electrical brain disturbance. If someone is seizing, clear the area and don't put things in their mouth.",
+        "alzheimer": "Progressive memory loss. Occupational therapy and certain meds can slow progression.",
+        "numbness": "Tingling or loss of feeling. Could be a pinched nerve or neuropathy. Check B12 levels.",
+        "vertigo": "Dizziness/Spinning feeling. Often an inner ear issue (BPPV). Try the Epley maneuver."
+    },
+    "ENT Specialist": {
+        "tinnitus": "Ringing in ears. Avoid loud noises. Can be caused by earwax buildup or stress.",
+        "sinusitis": "Facial pain/clogged nose. Use saline rinses and steam inhalation. If >10 days, antibiotics needed.",
+        "sore throat": "Could be Strep Throat (bacterial) or Viral. Gargle warm salt water.",
+        "ear infection": "Pain and fluid in ear. Don't use Q-tips. Requires antibiotic ear drops if bacterial."
+    },
+    "Psychiatrist": {
+        "anxiety": "Excessive worry. Practice mindfulness and box breathing. Therapy (CBT) is highly effective.",
+        "depression": "Persistent low mood. You are not alone. Reach out to a helpline or therapist.",
+        "bipolar": "Mood cycles from Mania to Depression. Requires mood stabilizers (Lithium/Lamotrigine).",
+        "adhd": "Focus issues. Structured routines and stimulant/non-stimulant meds help focus."
+    },
+    "Orthopedic": {
+        "back pain": "Usually muscular. Improve posture and core strength. If pain goes down legs, check for Sciatica.",
+        "arthritis": "Joint wear and tear. Stay active with low-impact exercises like swimming.",
+        "sprain": "Ligament injury. Use R.I.C.E (Rest, Ice, Compression, Elevation).",
+        "osteoporosis": "Weak bones. Increase Calcium and Vitamin D intake. Weight-bearing exercise helps."
+    }
+};
+
+function startConsultation(){
+    userName = document.getElementById("name").value;
+    selectedDoctor = document.getElementById("doctor").value;
+    if(!userName || !selectedDoctor) { alert("Please enter name and specialty."); return; }
+    document.getElementById("bookingForm").style.display = "none";
+    document.getElementById("chatContainer").style.display = "block";
+    addMessage("AI Bot", `Session started with ${selectedDoctor}. Hello ${userName}, please list your symptoms.`, 'ai-msg');
+}
+
+function addMessage(sender, text, className) {
+    const chatBox = document.getElementById("chatBox");
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "msg " + className;
+    msgDiv.innerHTML = `<span class="badge">${sender}</span><br>${text}`;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById("userQuery");
+    const query = input.value.trim().toLowerCase();
+    if (!query) return;
+
+    addMessage("You", input.value, 'user-msg');
+    input.value = "";
+
+    setTimeout(() => {
+        let response = "";
+        
+        // Priority 1: Search the selected doctor's database
+        for (let key in medicalDB[selectedDoctor]) {
+            if (query.includes(key)) { response = medicalDB[selectedDoctor][key]; break; }
+        }
+
+        // Priority 2: Global Search if not found in specialty
+        if (!response) {
+            for (let doc in medicalDB) {
+                for (let key in medicalDB[doc]) {
+                    if (query.includes(key)) {
+                        response = `Based on a cross-check with the ${doc} department: ${medicalDB[doc][key]}`;
+                        break;
+                    }
+                }
+                if (response) break;
+            }
+        }
+
+        // Priority 3: Symptom Mapping (Logic for descriptive inputs)
+        if (!response) {
+            if (query.includes("ringing")) response = "Ringing in ears is often Tinnitus. Have you been around loud noises or do you have earwax buildup?";
+            else if (query.includes("sharp pain")) response = "Where is the sharp pain? If it's in the chest or abdomen, it needs immediate attention.";
+            else if (query.includes("forgot") || query.includes("memory")) response = "Frequent memory loss should be evaluated by a Neurologist for cognitive health.";
+            else if (query.includes("burning")) response = "Burning sensations can indicate a UTI, nerve damage, or a skin burn depending on the location.";
+            else response = `I've analyzed your symptoms. As a ${selectedDoctor}, I recommend monitoring for a fever or worsening pain. This requires a physical exam for a final diagnosis.`;
+        }
+
+        addMessage("AI Specialist", response, 'ai-msg');
+    }, 1100);
+}
+
+document.getElementById("userQuery").addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
+</script>
+</body>
+</html>

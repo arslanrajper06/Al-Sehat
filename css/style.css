@@ -1,0 +1,362 @@
+ :root{
+  --main:#00c2a8;
+  --dark:#020617;
+  --light:#f4fcfc;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* FIX: Removes default underlines from all links and buttons globally */
+a {
+  text-decoration: none;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--light);
+  color:#222;
+  transition:0.4s;
+}
+
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#00c2a8,#00e676);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.loader span{
+  width:60px;
+  height:60px;
+  border:6px solid white;
+  border-top:6px solid transparent;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(90deg,#00c2a8,#00e676);
+  z-index:1000;
+}
+header.scrolled{
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(12px);
+}
+header h1{color:white;}
+
+nav a{
+  color:white;
+  margin-left:18px;
+  text-decoration:none; /* Ensure no line appears here */
+  position:relative;
+}
+
+/* This is your custom animated underline - keep this if you want the hover line effect */
+nav a::after{
+  content:"";
+  position:absolute;
+  width:0;
+  height:2px;
+  background:white;
+  bottom:-5px;
+  left:0;
+  transition:0.3s;
+}
+nav a:hover::after{width:100%;}
+
+.dark-btn{
+  margin-left:15px;
+  border:none;
+  padding:8px 12px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:linear-gradient(135deg,#00c2a8,#00e676);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+.hero h1{font-size:55px;}
+.hero p{margin-top:10px;}
+
+/* SECTIONS */
+section{
+  padding:110px 60px;
+}
+.title{
+  text-align:center;
+  font-size:36px;
+  margin-bottom:50px;
+}
+
+/* GRID & CARD */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px; 
+}
+.card{
+  background:white;
+  padding:30px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+  transition:0.4s;
+  opacity:0; 
+  transform:translateY(60px);
+}
+.card:hover{transform:translateY(-10px);}
+
+/* COUNTER */
+.counter{
+  font-size:40px;
+  color:var(--main);
+  font-weight:bold;
+}
+
+/* FOOTER */
+footer{
+  background:#003333;
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+
+/* DARK MODE */
+body.dark{
+  background:#0f172a;
+  color:#e5e7eb;
+}
+body.dark header{background:rgba(0,0,0,0.8);}
+body.dark .hero{background:linear-gradient(135deg,#020617,#064e3b);}
+body.dark .card{background:#020617;}
+body.dark footer{background:#020617;}
+
+.join-btn {
+    display: inline-block; /* Helps with link layout */
+    text-decoration: none; /* Removes underline if the button is an <a> tag */
+    width: 100%;
+    max-width: 420px;
+    padding: 22px;
+    border: none;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00c853, #00e676);
+    box-shadow: 0 10px 25px rgba(0, 200, 83, 0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Hover Effect */
+.join-btn:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0, 200, 83, 0.5);
+}
+
+/* Click Effect */
+.join-btn:active {
+    transform: scale(0.98);
+}
+
+/* Shine Animation */
+.join-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: 0.6s;
+}
+
+.join-btn:hover::before {
+    left: 100%;
+}
+
+
+
+/* Variables and Resets */
+:root {
+    --main: #00c2a8;
+    --dark: #020617;
+    --light: #f4fcfc;
+    --accent: #00e676;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* FIX: Removes underlines globally */
+a { 
+    text-decoration: none !important; 
+}
+
+html { 
+    scroll-behavior: smooth; 
+}
+
+body {
+    background: var(--light);
+    color: #222;
+    transition: 0.4s;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* LOADER */
+.loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #00c2a8, #00e676);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.loader span {
+    width: 60px;
+    height: 60px;
+    border: 6px solid white;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #003333;
+    z-index: 1000;
+}
+header h1 { color: white; font-size: 24px; }
+nav a { color: white; margin-left: 18px; font-size: 15px; }
+
+.dark-btn {
+    margin-left: 15px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+/* HERO SECTION */
+.hero {
+    height: 85vh;
+    background: linear-gradient(135deg, #00c2a8, #00e676);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding-top: 80px;
+}
+.hero h1 { font-size: 60px; font-weight: 700; margin-bottom: 10px; }
+.hero p { font-size: 22px; margin-bottom: 35px; opacity: 0.9; }
+
+/* HERO BUTTONS */
+.hero-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.hero-btn {
+    padding: 12px 28px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+.hero-btn:hover {
+    background: white;
+    color: var(--main);
+    transform: translateY(-3px);
+}
+
+/* CONTENT SECTIONS */
+section { 
+    padding: 80px 60px; 
+    flex: 1; /* Pushes footer to bottom */
+}
+.title { text-align: center; font-size: 36px; margin-bottom: 50px; }
+
+/* GRID & CARDS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: 0.4s;
+    text-align: center;
+}
+.card h3 { color: var(--main); margin-bottom: 15px; }
+.card:hover { transform: translateY(-10px); }
+
+.counter { font-size: 45px; color: var(--main); font-weight: bold; }
+
+/* FOOTER */
+footer {
+    background: #003333;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+/* DARK MODE */
+body.dark { background: #0f172a; color: #e5e7eb; }
+body.dark .card { background: #1e293b; color: #e5e7eb; }

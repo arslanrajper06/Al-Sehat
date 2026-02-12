@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Partner as Doctor - AI Sehat</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/script.js"></script>
+<style>
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#00c853,#00e676);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-container button:hover {
+    transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>AI Sehat</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="problems.html">Problems</a>
+<a href="services.html">Services</a>
+<a href="emergency.html">Emergency</a>
+<a href="contact.html">Join</a>
+<a href="about.html">About</a>
+<button id="darkToggle" class="dark-btn">🌙</button>
+</nav>
+</header>
+
+<section>
+<h2 class="title">Doctor Registration</h2>
+
+<div class="form-container">
+<form>
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email Address" required>
+<input type="text" placeholder="MBBS Degree University" required>
+<input type="text" placeholder="PMDC Registration Number" required>
+<input type="text" placeholder="Specialization (e.g Cardiologist)" required>
+<input type="number" placeholder="Years of Experience" required>
+<button type="submit">Submit Application</button>
+</form>
+</div>
+
+</section>
+
+<footer>© AI Sehat Pakistan</footer>
+
+</body>
+</html>

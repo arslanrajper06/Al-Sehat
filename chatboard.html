@@ -1,0 +1,251 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>AI Health Chatbot - AI Sehat</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f9;
+}
+
+header {
+    background: #00c853;
+    padding: 15px;
+    color: white;
+    text-align: center;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    height: 520px;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: linear-gradient(135deg,#00c853,#00e676);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 75%;
+    white-space: pre-line;
+}
+
+.user {
+    background: #00e676;
+    align-self: flex-end;
+    color: white;
+}
+
+.bot {
+    background: #f1f1f1;
+    align-self: flex-start;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.chat-input button {
+    background: #00c853;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background: #009624;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>AI Sehat - Health Assistant</h1>
+</header>
+
+<div class="chat-container">
+    <div class="chat-header">
+        AI Sehat Assistant 🤖
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="message bot">
+Hello! I am AI Sehat Assistant.
+
+⚠️ This chatbot provides general health guidance only.
+It does NOT replace a doctor.
+
+How can I help you today?
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your health problem..." onkeypress="if(event.key==='Enter') sendMessage()">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<footer>© AI Sehat Pakistan</footer>
+
+<script>
+
+const diseaseDatabase = [
+{
+    keywords: ["fever","temperature"],
+    response: `🩺 Fever Care:
+• Take Paracetamol 500mg every 6-8 hours
+• Drink plenty of water
+• Rest properly
+⚠️ If fever exceeds 102°F or lasts 2+ days, consult a doctor.`
+},
+{
+    keywords: ["headache","migraine"],
+    response: `🩺 Headache:
+• Take Paracetamol or Ibuprofen
+• Rest in a quiet dark room
+• Stay hydrated
+⚠️ Severe or frequent headaches need medical advice.`
+},
+{
+    keywords: ["cough"],
+    response: `🩺 Cough:
+• Use cough syrup (Benylin etc.)
+• Drink warm fluids
+• Honey with warm water
+⚠️ If cough lasts more than 3 days, see a doctor.`
+},
+{
+    keywords: ["cold","flu"],
+    response: `🩺 Cold / Flu:
+• Paracetamol for fever
+• Cetirizine for allergy symptoms
+• Steam inhalation
+⚠️ Breathing difficulty = Emergency.`
+},
+{
+    keywords: ["stomach","gas","acidity"],
+    response: `🩺 Stomach Pain / Gas:
+• Take Antacid (Gaviscon, Digene)
+• Avoid spicy food
+• Drink warm water
+⚠️ Severe pain requires doctor checkup.`
+},
+{
+    keywords: ["diarrhea","loose motion"],
+    response: `🩺 Diarrhea:
+• Drink ORS solution
+• Stay hydrated
+• Avoid oily food
+⚠️ Blood in stool or 2+ days = See doctor.`
+},
+{
+    keywords: ["allergy","rash","itching"],
+    response: `🩺 Allergy:
+• Cetirizine 10mg once daily
+• Avoid allergens
+⚠️ Swelling of face or breathing issue = Emergency.`
+},
+{
+    keywords: ["blood pressure","bp"],
+    response: `🩺 Blood Pressure:
+• Monitor BP regularly
+• Reduce salt intake
+⚠️ Do NOT take BP medicine without doctor advice.`
+},
+{
+    keywords: ["diabetes","sugar"],
+    response: `🩺 Diabetes:
+• Monitor blood sugar
+• Avoid sugary foods
+• Regular exercise
+⚠️ Medicine must be prescribed by doctor.`
+},
+{
+    keywords: ["heart attack","stroke","emergency","chest pain"],
+    response: `🚨 MEDICAL EMERGENCY!
+Call emergency services immediately.
+Do NOT delay medical help.`
+}
+];
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if(message === "") return;
+
+    const chatBox = document.getElementById("chatBox");
+
+    const userDiv = document.createElement("div");
+    userDiv.classList.add("message","user");
+    userDiv.innerText = message;
+    chatBox.appendChild(userDiv);
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    setTimeout(() => {
+        const botDiv = document.createElement("div");
+        botDiv.classList.add("message","bot");
+        botDiv.innerText = getBotResponse(message);
+        chatBox.appendChild(botDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 600);
+}
+
+function getBotResponse(input) {
+    input = input.toLowerCase();
+
+    for(let disease of diseaseDatabase){
+        for(let word of disease.keywords){
+            if(input.includes(word)){
+                return disease.response;
+            }
+        }
+    }
+
+    return "I recommend consulting a certified doctor for proper diagnosis and treatment.";
+}
+
+</script>
+
+</body>
+</html>
