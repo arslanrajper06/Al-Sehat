@@ -59,4 +59,67 @@ This project is a **prototype** built using **HTML, CSS, and JavaScript only**, 
 ---
 
 ## 📂 Project Structure
+ai-sehat/
+│
+├── index.html
+├── problems.html
+├── services.html
+├── emergency.html
+├── about.html
+├── contact.html
+├── volunteer.html
+├── online_doctor_consultation.html
+├── medicine_delivery.html
+├── chatboard.html
+│
+├── css/
+│ └── style.css
+│
+├── js/
+│ └── script.js
+│
+└── README.md
 
+
+---
+
+## 👥 Team Members & Contributions
+
+| Name | Contribution |
+|-----|--------------|
+| **Shafique Ahmed Khaki** | HTML structure, chatbot logic, patient intake flow |
+| **Hamza Khan** | CSS styling, responsive layout, dark mode, animations |
+| **Ronit Sharma** | JavaScript logic, event handling, UI interactions |
+
+---
+
+## ⚙️ Installation & Usage
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/ai-sehat.git
+2. Navigate to the project folder:
+    cd ai-sehat
+3. Open index.html in any modern web browser.
+    No additional setup is required since this is a static frontend project.
+
+
+📋 Limitations
+
+      No backend or real database
+
+      No real-time doctor or video consultation
+
+      AI responses are rule-based (not ML-powered)
+
+🔮 Future Improvements
+
+      Integrate backend services (Node.js / Firebase)
+
+      Store user interactions using a database
+
+      Add real-time chat or video consultation
+
+      Mobile application version
+
+      Advanced AI/ML-based symptom analysis
