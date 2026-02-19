@@ -87,9 +87,9 @@ ai-sehat/
 
 | Name | Contribution |
 |-----|--------------|
-| **Shafique Ahmed Khaki** | HTML structure, chatbot logic, patient intake flow |
-| **Hamza Khan** | CSS styling, responsive layout, dark mode, animations |
-| **Ronit Sharma** | JavaScript logic, event handling, UI interactions |
+| **Arslan Ahmed** | HTML structure, chatbot logic, patient intake flow |
+| **Hamza Butt** | CSS styling, responsive layout, dark mode, animations |
+| **Shafique Ahmed** | JavaScript logic, event handling, UI interactions |
 
 ---
 
